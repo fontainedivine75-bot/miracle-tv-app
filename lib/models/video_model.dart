@@ -5,7 +5,7 @@ class VideoModel {
   final String thumbnailUrl;
   final String youtubeVideoId;
   final String category;
-  final String publishedAt;
+  final DateTime publishedAt;
   final bool isPublished;
 
   VideoModel({
@@ -22,12 +22,14 @@ class VideoModel {
   factory VideoModel.fromMap(Map<String, dynamic> map, String id) {
     return VideoModel(
       id: id,
-      title: map['title'] ?? 'Titre',
+      title: map['title'] ?? '',
       description: map['description'] ?? '',
       thumbnailUrl: map['thumbnailUrl'] ?? '',
       youtubeVideoId: map['youtubeVideoId'] ?? '',
-      category: map['category'] ?? 'Autre',
-      publishedAt: map['publishedAt'] ?? '',
+      category: map['category'] ?? 'Other',
+      publishedAt: map['publishedAt'] != null
+          ? DateTime.parse(map['publishedAt'])
+          : DateTime.now(),
       isPublished: map['isPublished'] ?? true,
     );
   }
@@ -39,7 +41,7 @@ class VideoModel {
       'thumbnailUrl': thumbnailUrl,
       'youtubeVideoId': youtubeVideoId,
       'category': category,
-      'publishedAt': publishedAt,
+      'publishedAt': publishedAt.toIso8601String(),
       'isPublished': isPublished,
     };
   }

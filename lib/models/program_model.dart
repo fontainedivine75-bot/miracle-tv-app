@@ -7,6 +7,7 @@ class ProgramModel {
   final String location;
   final String imageUrl;
   final bool isPublished;
+  final DateTime createdAt;
 
   ProgramModel({
     required this.id,
@@ -17,18 +18,22 @@ class ProgramModel {
     required this.location,
     required this.imageUrl,
     this.isPublished = true,
+    required this.createdAt,
   });
 
   factory ProgramModel.fromMap(Map<String, dynamic> map, String id) {
     return ProgramModel(
       id: id,
-      title: map['title'] ?? 'Programme',
+      title: map['title'] ?? '',
       description: map['description'] ?? '',
       date: map['date'] ?? '',
       time: map['time'] ?? '',
       location: map['location'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       isPublished: map['isPublished'] ?? true,
+      createdAt: map['createdAt'] != null
+          ? DateTime.parse(map['createdAt'])
+          : DateTime.now(),
     );
   }
 
@@ -41,6 +46,7 @@ class ProgramModel {
       'location': location,
       'imageUrl': imageUrl,
       'isPublished': isPublished,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 }

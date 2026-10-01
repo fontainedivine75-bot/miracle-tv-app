@@ -4,6 +4,7 @@ class UserModel {
   final String email;
   final String? photoUrl;
   final bool isAdmin;
+  final DateTime createdAt;
 
   UserModel({
     required this.id,
@@ -11,15 +12,19 @@ class UserModel {
     required this.email,
     this.photoUrl,
     this.isAdmin = false,
+    required this.createdAt,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map, String id) {
     return UserModel(
       id: id,
-      name: map['name'] ?? 'Utilisateur',
+      name: map['name'] ?? 'User',
       email: map['email'] ?? '',
       photoUrl: map['photoUrl'],
       isAdmin: map['isAdmin'] ?? false,
+      createdAt: map['createdAt'] != null
+          ? DateTime.parse(map['createdAt'])
+          : DateTime.now(),
     );
   }
 
@@ -29,6 +34,7 @@ class UserModel {
       'email': email,
       'photoUrl': photoUrl,
       'isAdmin': isAdmin,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 }
